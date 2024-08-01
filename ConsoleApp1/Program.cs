@@ -9,58 +9,64 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ConsoleApp1
-{
+{  
     internal class Program
     {
         static Process child;
 
-
         static void Main(string[] args)
         {
-            if (args.Length == 0)
+            Application.ApplicationExit += Application_ApplicationExit;
+            Process.GetCurrentProcess().Exited += Program_Exited;
+
+            NotificationIcon.StartNotificationIcon();
+
+            child = new Process
             {
-                Application.ApplicationExit += Application_ApplicationExit;
-                child = new Process
+                StartInfo = new ProcessStartInfo
                 {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = ".\\ConsoleApp1.exe",
-                        Arguments = "arg",
-                        UseShellExecute = false,
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                    }
-                };
-                child.Start();
-                child.StandardInput.WriteLine("Hello world!\n");
-            }
-            else
-            {
-                string s;
-                int a;
-                FileStream logstream = File.OpenWrite(".\\childLog.txt");
-                while (true)
-                {
-                    if((a = Console.OpenStandardInput().ReadByte()) != -1)
-                    {
-                        logstream.WriteByte((byte)a);
-                        logstream.Flush();
-                    }
-                    Thread.Sleep(10);
+                    FileName = ".\\node.exe",
+                    Arguments = ".\\script.js",
+                    UseShellExecute = false,
+                    RedirectStandardInput = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+
                 }
-                if(a == 'H')
-                {
-                    NotificationIcon.StartNotificationIcon();
-                }
-            }
+            };
+            child.Start();
+            child.EnableRaisingEvents = true;
+            child.Exited += Child_Exited;
+
+            child.BeginOutputReadLine();
+            child.OutputDataReceived += Child_OutputDataReceived;
+            child.StandardInput.WriteLine("Hello world!\n");
 
             Application.Run();
         }
 
+        private static void Program_Exited(object sender, EventArgs e)
+        {
+            if (child != null && !child.HasExited)
+            {
+                child.Kill();
+            }
+        }
+
+        private static void Child_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Console.WriteLine(e.Data);
+        }
+
+        private static void Child_Exited(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
         private static void Application_ApplicationExit(object sender, EventArgs e)
         {
-            if (child != null)
+            if (child != null && !child.HasExited)
             {
                 child.Kill();
             }
