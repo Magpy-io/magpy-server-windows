@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ConsoleApp1
 {  
-    internal class Program
+    public class Program
     {
-        static Process child;
+        static public Process child;
 
         static void Main(string[] args)
         {
@@ -25,8 +25,8 @@ namespace ConsoleApp1
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = ".\\node.exe",
-                    Arguments = ".\\script.js",
+                    FileName = ".\\out\\opencloud-server-win.exe",
+                    Arguments = "",
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
@@ -42,7 +42,6 @@ namespace ConsoleApp1
 
             child.BeginOutputReadLine();
             child.OutputDataReceived += Child_OutputDataReceived;
-            child.StandardInput.WriteLine("Hello world!\n");
 
             Application.Run();
         }
