@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace MagpyServerWindows
 {
     /// <summary>
     /// Allows processes to be automatically killed if this parent process unexpectedly quits.

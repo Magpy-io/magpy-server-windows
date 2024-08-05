@@ -8,8 +8,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ConsoleApp1
-{  
+using Squirrel;
+
+namespace MagpyServerWindows
+{
     public class Program
     {
         static public Process child;
@@ -21,12 +23,19 @@ namespace ConsoleApp1
 
             NotificationIcon.StartNotificationIcon();
 
+            bool nodeExists = File.Exists("..\\node.exe");
+
+            if (!nodeExists)
+            {
+                File.Copy(".\\node.exe", "..\\node.exe");
+            }
+
             child = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = ".\\out\\opencloud-server-win.exe",
-                    Arguments = "",
+                    FileName = "..\\node.exe",
+                    Arguments = ".\\bundle\\js\\bundle.js",
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
@@ -43,7 +52,17 @@ namespace ConsoleApp1
             child.BeginOutputReadLine();
             child.OutputDataReceived += Child_OutputDataReceived;
 
+            //checkForUpdates();
+
             Application.Run();
+        }
+
+        private static async void checkForUpdates()
+        {
+            using (var mgr = new UpdateManager("E:\\Libraries\\Documents\\Projects\\MagpyServerWindows\\Releases"))
+            {
+                await mgr.UpdateApp();
+            }
         }
 
         private static void Program_Exited(object sender, EventArgs e)

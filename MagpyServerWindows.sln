@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{7DA344A0-24A2-427D-AFAA-F7A3E394B665}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagpyServerWindows", "MagpyServerWindows\MagpyServerWindows.csproj", "{B7EC5B8F-B0E0-491C-ADC7-6418F21FDDD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7DA344A0-24A2-427D-AFAA-F7A3E394B665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7DA344A0-24A2-427D-AFAA-F7A3E394B665}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7DA344A0-24A2-427D-AFAA-F7A3E394B665}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7DA344A0-24A2-427D-AFAA-F7A3E394B665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7EC5B8F-B0E0-491C-ADC7-6418F21FDDD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7EC5B8F-B0E0-491C-ADC7-6418F21FDDD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7EC5B8F-B0E0-491C-ADC7-6418F21FDDD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7EC5B8F-B0E0-491C-ADC7-6418F21FDDD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3D89D91D-A2B1-4B34-B50C-DEB445011D49}
+		SolutionGuid = {2667227F-DB07-4DD8-8607-E6B8428BEECA}
 	EndGlobalSection
 EndGlobal

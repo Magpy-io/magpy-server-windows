@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ConsoleApp1
+namespace MagpyServerWindows
 {
     public class NotificationIcon
     {
         static private System.Windows.Forms.NotifyIcon notifyIcon1;
         static private System.Windows.Forms.ContextMenu contextMenu1;
         static private System.Windows.Forms.MenuItem menuItem1;
+        static private System.Windows.Forms.MenuItem menuItem2;
         static private System.ComponentModel.IContainer components;
 
         public static void StartNotificationIcon()
@@ -19,15 +21,25 @@ namespace ConsoleApp1
             components = new System.ComponentModel.Container();
             contextMenu1 = new System.Windows.Forms.ContextMenu();
             menuItem1 = new System.Windows.Forms.MenuItem();
+            menuItem2 = new System.Windows.Forms.MenuItem();
 
             // Initialize contextMenu1
             contextMenu1.MenuItems.AddRange(
-                        new System.Windows.Forms.MenuItem[] { menuItem1 });
+                        new System.Windows.Forms.MenuItem[] { menuItem1, menuItem2 });
 
             // Initialize menuItem1
             menuItem1.Index = 0;
             menuItem1.Text = "Exit";
             menuItem1.Click += new System.EventHandler(menuItem1_Click);
+
+
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            string version = assembly.GetName().Version.ToString(3);
+
+            // Initialize menuItem1
+            menuItem2.Index = 1;
+            menuItem2.Text = "Magpy v" + version;
 
             // Create the NotifyIcon.
             notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
@@ -42,6 +54,7 @@ namespace ConsoleApp1
 
             // The Text property sets the text that will be displayed,
             // in a tooltip, when the mouse hovers over the systray icon.
+
             notifyIcon1.Text = "Magpy";
             notifyIcon1.Visible = true;
 

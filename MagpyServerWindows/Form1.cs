@@ -8,22 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ConsoleApp1
+namespace MagpyServerWindows
 {
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
-
-        }
-
-        private void InitializeComponent()
-        {
-            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            //this.ClientSize = new System.Drawing.Size(800, 450);
-            //this.Text = "Form1";
-            //this.Hide();
         }
     }
 }
