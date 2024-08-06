@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -40,6 +41,7 @@ namespace MagpyServerWindows
             // Initialize menuItem1
             menuItem2.Index = 1;
             menuItem2.Text = "Magpy v" + version;
+            menuItem2.Click += MenuItem2_Click;
 
             // Create the NotifyIcon.
             notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
@@ -62,9 +64,14 @@ namespace MagpyServerWindows
             notifyIcon1.DoubleClick += new System.EventHandler(menuItem1_Click);
         }
 
+        private static void MenuItem2_Click(object sender, EventArgs e)
+        {
+            Program.child.StandardInput.WriteLine(NodeEvents.FormatEventSystrayAbout());
+        }
+
         static private void menuItem1_Click(object Sender, EventArgs e)
         {
-            Program.child.StandardInput.WriteLine("[Event] exit clicked");
+            Program.child.StandardInput.WriteLine(NodeEvents.FormatEventSystrayExit());
         }
     }
 }
