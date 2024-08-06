@@ -7,8 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Squirrel;
+using Velopack;
 
 namespace MagpyServerWindows
 {
@@ -18,6 +17,7 @@ namespace MagpyServerWindows
 
         static void Main(string[] args)
         {
+            VelopackApp.Build().Run();
             Application.ApplicationExit += Application_ApplicationExit;
             Process.GetCurrentProcess().Exited += Program_Exited;
 
@@ -27,7 +27,7 @@ namespace MagpyServerWindows
 
             if (!nodeExists)
             {
-                File.Copy(".\\node.exe", "..\\node.exe");
+                File.Copy(".\\redis\\node.exe", "..\\node.exe");
             }
 
             child = new Process
@@ -56,13 +56,21 @@ namespace MagpyServerWindows
 
             Application.Run();
         }
-
-        private static async void checkForUpdates()
+        
+        private static async Task UpdateMyApp()
         {
-            using (var mgr = new UpdateManager("E:\\Libraries\\Documents\\Projects\\MagpyServerWindows\\Releases"))
-            {
-                await mgr.UpdateApp();
-            }
+            var mgr = new UpdateManager("E:\\Libraries\\Documents\\Projects\\MagpyServerWindows\\Releases");
+
+            // check for new version
+            var newVersion = await mgr.CheckForUpdatesAsync();
+            if (newVersion == null)
+                return; // no update available
+
+            // download new version
+            await mgr.DownloadUpdatesAsync(newVersion);
+
+            // install new version and restart app
+            mgr.ApplyUpdatesAndRestart(newVersion);
         }
 
         private static void Program_Exited(object sender, EventArgs e)
