@@ -15,11 +15,13 @@ namespace MagpyServerWindows
     {
         static public Process child;
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             VelopackApp.Build().Run();
             Application.ApplicationExit += Application_ApplicationExit;
             Process.GetCurrentProcess().Exited += Program_Exited;
+
+            await UpdateMyApp();
 
             NotificationIcon.StartNotificationIcon();
 
@@ -52,8 +54,6 @@ namespace MagpyServerWindows
             child.BeginOutputReadLine();
             child.OutputDataReceived += Child_OutputDataReceived;
 
-            //checkForUpdates();
-
             Application.Run();
         }
         
@@ -61,10 +61,18 @@ namespace MagpyServerWindows
         {
             var mgr = new UpdateManager("E:\\Libraries\\Documents\\Projects\\MagpyServerWindows\\Releases");
 
+            // check is app installed
+            if (!mgr.IsInstalled)
+            {
+                return; // app not installed
+            }
+
             // check for new version
             var newVersion = await mgr.CheckForUpdatesAsync();
             if (newVersion == null)
+            {
                 return; // no update available
+            }
 
             // download new version
             await mgr.DownloadUpdatesAsync(newVersion);
