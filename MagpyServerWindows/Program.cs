@@ -12,10 +12,11 @@ using Velopack;
 namespace MagpyServerWindows
 {
     public class Program
-    {
+   {
+        const string SINGLE_APP_INSTANCE_MUTEX_ID = "Magpy-mutex-one-instance_1ec5de2a-0872-4620-b4fc-a0a739e333ac";
         static public Process child;
 
-        static async Task Main(string[] args)
+        static async Task MainInner(string[] args)
         {
             VelopackApp.Build().Run();
             Application.ApplicationExit += Application_ApplicationExit;
@@ -55,6 +56,30 @@ namespace MagpyServerWindows
             child.OutputDataReceived += Child_OutputDataReceived;
 
             Application.Run();
+        }
+
+        static async Task Main(string[] args)
+        {
+            Mutex mutex = new Mutex(false, SINGLE_APP_INSTANCE_MUTEX_ID);
+            try
+            {
+                if (mutex.WaitOne(0, false))
+                {
+                    await MainInner(args);
+                }
+                else
+                {
+                    Application.Exit();
+                }
+            }
+            finally
+            {
+                if (mutex != null)
+                {
+                    mutex.Close();
+                    mutex = null;
+                }
+            }
         }
         
         private static async Task UpdateMyApp()
