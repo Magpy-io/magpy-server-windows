@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -48,7 +49,8 @@ namespace MagpyServerWindows
 
             // The Icon property sets the icon that will appear
             // in the systray for this application.
-            notifyIcon1.Icon = new System.Drawing.Icon("appicon.ico");
+            
+            notifyIcon1.Icon = new System.Drawing.Icon(PathManager.RelativeExeToAbsolute(".\\appicon.ico"));
 
             // The ContextMenu property sets the menu that will
             // appear when the systray icon is right clicked.
@@ -71,7 +73,10 @@ namespace MagpyServerWindows
 
         static private void menuItem1_Click(object Sender, EventArgs e)
         {
-            Program.child.StandardInput.WriteLine(NodeEvents.FormatEventSystrayExit());
+            if(Program.child != null)
+            {
+                Program.child.StandardInput.WriteLine(NodeEvents.FormatEventSystrayExit());
+            }
         }
     }
 }
