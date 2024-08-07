@@ -17,11 +17,20 @@ namespace MagpyServerWindows
 
         static async Task MainInner(string[] args)
         {
+
             VelopackApp.Build()
+                .WithAfterInstallFastCallback((v) =>
+                {
+                    AutoStartupSetup.EnableAutoStartup();
+                })
+                .WithBeforeUninstallFastCallback((v) =>
+                {
+                    AutoStartupSetup.DisableAutoStartup();
+                })
                 .WithFirstRun((v) => {
                     ServerManager.OpenWebInterface();
                 })
-                .Run();
+            .Run();
 
             await UpdateMyApp();
 
