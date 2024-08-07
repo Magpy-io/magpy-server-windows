@@ -20,5 +20,11 @@ namespace MagpyServerWindows
             var e = new { source = "NOTIFICAITON_ICON", name = "ABOUT" };
             return JsonConvert.SerializeObject(e);
         }
+
+        public static string FormatActionOpenWebInterface()
+        {
+            var e = new { source = "ACTION", name = "OPEN_WEB_INTERFACE" };
+            return JsonConvert.SerializeObject(e);
+        }
     }
 }
