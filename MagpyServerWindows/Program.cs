@@ -13,14 +13,13 @@ namespace MagpyServerWindows
 {
     public class Program
    {
-        const string SINGLE_APP_INSTANCE_MUTEX_ID = "Magpy-mutex-one-instance_1ec5de2a-0872-4620-b4fc-a0a739e333ac";
         static public Process child;
 
         static async Task MainInner(string[] args)
         {
             VelopackApp.Build()
                 .WithFirstRun((v) => {
-                    Process.Start("http://127.0.0.1:8000");
+                    ServerManager.OpenWebInterface();
                 })
                 .Run();
 
@@ -66,7 +65,7 @@ namespace MagpyServerWindows
 
         static async Task Main(string[] args)
         {
-            Mutex mutex = new Mutex(false, SINGLE_APP_INSTANCE_MUTEX_ID);
+            Mutex mutex = new Mutex(false, Constants.SINGLE_APP_INSTANCE_MUTEX_ID);
             try
             {
                 if (mutex.WaitOne(0, false))
@@ -75,7 +74,7 @@ namespace MagpyServerWindows
                 }
                 else
                 {
-                    Process.Start("http://127.0.0.1:8000");
+                    ServerManager.OpenWebInterface();
                     Application.Exit();
                 }
             }

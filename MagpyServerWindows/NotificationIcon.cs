@@ -66,7 +66,7 @@ namespace MagpyServerWindows
 
         private static void MenuItem2_Click(object sender, EventArgs e)
         {
-            Process.Start("http://127.0.0.1:8000");
+            ServerManager.OpenWebInterface();
         }
 
         static private void menuItem1_Click(object Sender, EventArgs e)
