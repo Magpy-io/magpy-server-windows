@@ -34,21 +34,19 @@ namespace MagpyServerWindows
 
             await UpdateMyApp();
 
-            Directory.CreateDirectory("..\\redis");
+            bool nodefound = NodeExeManager.VerifyNodeExe();
 
-            bool nodeExists = File.Exists("..\\redis\\node.exe");
-
-            if (!nodeExists)
+            if (!nodefound)
             {
-                File.Move(".\\node.exe", "..\\redis\\node.exe");
+                throw new Exception("Node executable not found.");
             }
 
             child = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "..\\redis\\node.exe",
-                    Arguments = ".\\bundle\\js\\bundle.js",
+                    FileName = NodeExeManager.NodePath,
+                    Arguments = NodeExeManager.JsEntryFilePath,
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
