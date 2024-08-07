@@ -19,6 +19,8 @@ namespace MagpyServerWindows
         static private System.Windows.Forms.MenuItem menuItem2;
         static private System.ComponentModel.IContainer components;
 
+        static string AppName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+
         public static void StartNotificationIcon()
         {
             components = new System.ComponentModel.Container();
@@ -42,10 +44,10 @@ namespace MagpyServerWindows
 
             // Initialize menuItem1
             menuItem2.Index = 1;
-            menuItem2.Text = "Magpy v" + version;
+            menuItem2.Text = AppName + " v" + version;
 
             // Create the NotifyIcon.
-            notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
+            notifyIcon1 = new NotifyIcon(components);
 
             // The Icon property sets the icon that will appear
             // in the systray for this application.
@@ -59,7 +61,7 @@ namespace MagpyServerWindows
             // The Text property sets the text that will be displayed,
             // in a tooltip, when the mouse hovers over the systray icon.
 
-            notifyIcon1.Text = "Magpy";
+            notifyIcon1.Text = AppName;
             notifyIcon1.Visible = true;
 
             // Handle the DoubleClick event to activate the form.
