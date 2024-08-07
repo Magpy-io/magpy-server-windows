@@ -23,32 +23,29 @@ namespace MagpyServerWindows
                     Process.Start("http://127.0.0.1:8000");
                 })
                 .Run();
-            Application.ApplicationExit += Application_ApplicationExit;
-            Process.GetCurrentProcess().Exited += Program_Exited;
 
             await UpdateMyApp();
 
-            NotificationIcon.StartNotificationIcon();
+            Directory.CreateDirectory("..\\redis");
 
-            bool nodeExists = File.Exists("..\\node.exe");
+            bool nodeExists = File.Exists("..\\redis\\node.exe");
 
             if (!nodeExists)
             {
-                File.Copy(".\\redis\\node.exe", "..\\node.exe");
+                File.Move(".\\node.exe", "..\\redis\\node.exe");
             }
 
             child = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "..\\node.exe",
+                    FileName = "..\\redis\\node.exe",
                     Arguments = ".\\bundle\\js\\bundle.js",
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     CreateNoWindow = true,
-
                 }
             };
             child.Start();
@@ -58,6 +55,11 @@ namespace MagpyServerWindows
 
             child.BeginOutputReadLine();
             child.OutputDataReceived += Child_OutputDataReceived;
+
+            Application.ApplicationExit += Application_ApplicationExit;
+            Process.GetCurrentProcess().Exited += Program_Exited;
+
+            NotificationIcon.StartNotificationIcon();
 
             Application.Run();
         }
