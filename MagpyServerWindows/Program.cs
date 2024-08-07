@@ -18,7 +18,11 @@ namespace MagpyServerWindows
 
         static async Task MainInner(string[] args)
         {
-            VelopackApp.Build().Run();
+            VelopackApp.Build()
+                .WithFirstRun((v) => {
+                    Process.Start("http://127.0.0.1:8000");
+                })
+                .Run();
             Application.ApplicationExit += Application_ApplicationExit;
             Process.GetCurrentProcess().Exited += Program_Exited;
 

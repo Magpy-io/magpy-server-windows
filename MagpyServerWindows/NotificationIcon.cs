@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -41,7 +42,6 @@ namespace MagpyServerWindows
             // Initialize menuItem1
             menuItem2.Index = 1;
             menuItem2.Text = "Magpy v" + version;
-            menuItem2.Click += MenuItem2_Click;
 
             // Create the NotifyIcon.
             notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
@@ -61,12 +61,12 @@ namespace MagpyServerWindows
             notifyIcon1.Visible = true;
 
             // Handle the DoubleClick event to activate the form.
-            notifyIcon1.DoubleClick += new System.EventHandler(menuItem1_Click);
+            notifyIcon1.DoubleClick += new System.EventHandler(MenuItem2_Click);
         }
 
         private static void MenuItem2_Click(object sender, EventArgs e)
         {
-            Program.child.StandardInput.WriteLine(NodeEvents.FormatEventSystrayAbout());
+            Process.Start("http://127.0.0.1:8000");
         }
 
         static private void menuItem1_Click(object Sender, EventArgs e)
