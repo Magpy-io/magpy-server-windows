@@ -75,10 +75,7 @@ namespace MagpyServerWindows
 
         static private void menuItem1_Click(object Sender, EventArgs e)
         {
-            if(Program.child != null)
-            {
-                Program.child.StandardInput.WriteLine(NodeEvents.FormatEventSystrayExit());
-            }
+            NodeEvents.SendEventSystrayExit();
         }
     }
 }

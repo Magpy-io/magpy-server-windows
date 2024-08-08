@@ -77,6 +77,14 @@ namespace MagpyServerWindows
             }
         }
 
+        public static void SendData(string data)
+        {
+            if (child != null)
+            {
+                child.StandardInput.WriteLine(data);
+            }
+        }
+
         private static void Child_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             LoggingManager.LoggerNode.Debug(e.Data);

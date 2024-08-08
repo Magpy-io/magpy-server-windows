@@ -9,22 +9,27 @@ namespace MagpyServerWindows
 {
     public class NodeEvents
     {
-        public static string FormatEventSystrayExit()
+        private static string FormatEventSystrayExit()
         {
             var e = new { source = "NOTIFICAITON_ICON", name="EXIT" };
             return JsonConvert.SerializeObject(e);
         }
 
-        public static string FormatEventSystrayAbout()
+        private static string FormatEventSystrayAbout()
         {
             var e = new { source = "NOTIFICAITON_ICON", name = "ABOUT" };
             return JsonConvert.SerializeObject(e);
         }
 
-        public static string FormatActionOpenWebInterface()
+        private static string FormatActionOpenWebInterface()
         {
             var e = new { source = "ACTION", name = "OPEN_WEB_INTERFACE" };
             return JsonConvert.SerializeObject(e);
+        }
+
+        public static void SendEventSystrayExit()
+        {
+            NodeManager.SendData(FormatEventSystrayExit());
         }
     }
 }
