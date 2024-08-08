@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,9 +31,12 @@ namespace MagpyServerWindows
         {
             var mgr = new Velopack.UpdateManager("E:\\Libraries\\Documents\\Projects\\MagpyServerWindows\\Releases");
 
+            Log.Debug("Checking for updates.");
+
             // check is app installed
             if (!mgr.IsInstalled)
             {
+                Log.Debug("App is not installed.");
                 return; // app not installed
             }
 
@@ -40,12 +44,15 @@ namespace MagpyServerWindows
             var newVersion = await mgr.CheckForUpdatesAsync();
             if (newVersion == null)
             {
+                Log.Debug("No new version.");
                 return; // no update available
             }
 
+            Log.Debug("Downloading new version.");
             // download new version
             await mgr.DownloadUpdatesAsync(newVersion);
 
+            Log.Debug("Restarting and applying new version.");
             // install new version and restart app
             mgr.ApplyUpdatesAndRestart(newVersion);
         }
