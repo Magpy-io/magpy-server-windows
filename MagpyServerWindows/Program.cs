@@ -25,7 +25,14 @@ namespace MagpyServerWindows
 
             Log.Debug("Updating setup finished.");
 
-            await UpdateManager.UpdateMyApp();
+            try
+            {
+                await UpdateManager.UpdateMyApp();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex, "Error while trying to update server.");
+            }
 
             Log.Debug("Looking for node executable.");
 

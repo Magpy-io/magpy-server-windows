@@ -29,7 +29,7 @@ namespace MagpyServerWindows
 
         public static async Task UpdateMyApp()
         {
-            var mgr = new Velopack.UpdateManager("E:\\Libraries\\Documents\\Projects\\MagpyServerWindows\\Releases");
+            var mgr = new Velopack.UpdateManager("https://magpy-update-win.s3.eu-west-3.amazonaws.com");
 
             Log.Debug("Checking for updates.");
 
