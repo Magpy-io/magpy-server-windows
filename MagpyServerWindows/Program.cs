@@ -61,6 +61,7 @@ namespace MagpyServerWindows
 
             child.BeginOutputReadLine();
             child.OutputDataReceived += Child_OutputDataReceived;
+            child.ErrorDataReceived += Child_OutputDataReceived;
 
             Application.ApplicationExit += Application_ApplicationExit;
             Process.GetCurrentProcess().Exited += Program_Exited;
