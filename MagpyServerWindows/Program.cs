@@ -17,7 +17,7 @@ namespace MagpyServerWindows
 
         static async Task MainInner(string[] args)
         {
-
+            LoggingManager.Init();
             VelopackApp.Build()
                 .WithAfterInstallFastCallback((v) =>
                 {
@@ -30,7 +30,7 @@ namespace MagpyServerWindows
                 .WithFirstRun((v) => {
                     ServerManager.OpenWebInterface();
                 })
-            .Run();
+            .Run(LoggingManager.SerilogToMicrosoftLogger(LoggingManager.LoggerInstaller));
 
             await UpdateMyApp();
 
@@ -86,6 +86,13 @@ namespace MagpyServerWindows
                     Application.Exit();
                 }
             }
+            catch (Exception e)
+            {
+                LoggingManager.LoggerWinApp.Error(e, "Error launching app");
+#if DEBUG
+                Console.ReadKey();
+#endif
+            }
             finally
             {
                 if (mutex != null)
@@ -130,7 +137,7 @@ namespace MagpyServerWindows
 
         private static void Child_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            Console.WriteLine(e.Data);
+            LoggingManager.LoggerNode.Debug(e.Data);
         }
 
         private static void Child_Exited(object sender, EventArgs e)
