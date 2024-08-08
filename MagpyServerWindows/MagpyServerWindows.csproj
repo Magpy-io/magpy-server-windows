@@ -133,7 +133,7 @@
     <Compile Include="InstanceManager.cs" />
     <Compile Include="LoggingManager.cs" />
     <Compile Include="NodeEvents.cs" />
-    <Compile Include="NodeExeManager.cs" />
+    <Compile Include="NodeManager.cs" />
     <Compile Include="NotificationIcon.cs" />
     <Compile Include="PathManager.cs" />
     <Compile Include="Program.cs" />

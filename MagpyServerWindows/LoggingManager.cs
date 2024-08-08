@@ -53,5 +53,16 @@ namespace MagpyServerWindows
         {
             return new SerilogLoggerFactory(logger).CreateLogger("Serilog");
         }
+
+        public static void DisposeLoggers()
+        {
+            IDisposable disposable1 = (IDisposable)LoggerInstaller;
+            IDisposable disposable2 = (IDisposable)LoggerWinApp;
+            IDisposable disposable3 = (IDisposable)LoggerNode;
+
+            disposable1?.Dispose();
+            disposable2?.Dispose();
+            disposable3?.Dispose();
+        }
     }
 }

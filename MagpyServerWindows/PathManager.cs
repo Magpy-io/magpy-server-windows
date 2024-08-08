@@ -17,5 +17,10 @@ namespace MagpyServerWindows
             var a = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPDATA_MAGPY_FOLDER_NAME, relativePath);
             return a;
         }
+
+        public static void ClearAppDataFolder()
+        {
+            Directory.Delete(RelativeAppDataToAbsolute("."), true);
+        }
     }
 }

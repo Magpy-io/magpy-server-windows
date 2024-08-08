@@ -1,8 +1,5 @@
 ﻿using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Velopack;
 
@@ -19,6 +16,9 @@ namespace MagpyServerWindows
                })
                .WithBeforeUninstallFastCallback((v) =>
                {
+                   NodeManager.KillNodeServer();
+                   LoggingManager.DisposeLoggers();
+                   PathManager.ClearAppDataFolder();
                    AutoStartupSetup.DisableAutoStartup();
                })
                .WithFirstRun((v) => {
