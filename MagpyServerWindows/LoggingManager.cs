@@ -2,7 +2,6 @@
 using Serilog.Extensions.Logging;
 using System;
 using System.IO;
-using System.Threading.Channels;
 
 namespace MagpyServerWindows
 {
@@ -28,6 +27,8 @@ namespace MagpyServerWindows
             LoggerInstaller = createFileLoggerInFolder(INSTALLER_LOGGING_CHANNEL);
             LoggerNode = createFileLoggerInFolder(NODE_LOGGING_CHANNEL);
 #endif
+
+            Log.Logger = LoggerWinApp;
         }
 
         private static ILogger createFileLoggerInFolder(string channel)

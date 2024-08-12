@@ -14,10 +14,9 @@ namespace MagpyServerWindows
 {
     public class Program
    {
-        static async Task MainInner(string[] args)
+        static void MainInner(string[] args)
         {
             LoggingManager.Init();
-            Log.Logger = LoggingManager.LoggerWinApp;
 
             Log.Debug("Logging initialized.");
 
@@ -25,14 +24,7 @@ namespace MagpyServerWindows
 
             Log.Debug("Updating setup finished.");
 
-            try
-            {
-                await UpdateManager.UpdateMyApp();
-            }
-            catch (Exception ex)
-            {
-                Log.Debug(ex, "Error while trying to update server.");
-            }
+            Task delayedUpdate = UpdateManager.SetupDelayedUpdate();
 
             Log.Debug("Looking for node executable.");
 
@@ -58,14 +50,14 @@ namespace MagpyServerWindows
             Application.Run();
         }
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             try
             {
                 bool instanceCreated = InstanceManager.HoldInstance();
                 if (instanceCreated)
                 {
-                    await MainInner(args);
+                    MainInner(args);
                 }
                 else
                 {
@@ -75,7 +67,7 @@ namespace MagpyServerWindows
             }
             catch (Exception e)
             {
-                LoggingManager.LoggerWinApp.Error(e, "Error launching app");
+                Log.Error(e, "Error launching app");
 #if DEBUG
                 Console.ReadKey();
 #endif
