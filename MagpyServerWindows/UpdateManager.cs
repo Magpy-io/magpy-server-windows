@@ -56,5 +56,21 @@ namespace MagpyServerWindows
             // install new version and restart app
             mgr.ApplyUpdatesAndRestart(newVersion);
         }
+
+        public static async Task SetupDelayedUpdate(int minutes = 3)
+        {
+            int millisecondsDelay = minutes * 1000 * 60;
+
+            await Task.Delay(millisecondsDelay);
+
+            try
+            {
+                await UpdateMyApp();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex, "Error while trying to update server.");
+            }
+        }
     }
 }
