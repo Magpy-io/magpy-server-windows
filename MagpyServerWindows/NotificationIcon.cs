@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using System.ComponentModel;
 
 using static MagpyServerWindows.Constants;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MagpyServerWindows
 {
@@ -38,9 +40,11 @@ namespace MagpyServerWindows
             notifyIcon.DoubleClick += new EventHandler(MenuItem_DoubleClick);
         }
 
-        static private void Exit_Clicked(object Sender, EventArgs e)
+        static private async void Exit_Clicked(object Sender, EventArgs e)
         {
             NodeEvents.SendEventSystrayExit();
+            await Task.Delay(500);
+            Application.Exit();
         }
 
         private static void MenuItem_DoubleClick(object sender, EventArgs e)

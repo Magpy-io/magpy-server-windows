@@ -43,6 +43,7 @@ namespace MagpyServerWindows
             Log.Debug("Node server started.");
 
             Process.GetCurrentProcess().Exited += Program_Exited;
+            Application.ApplicationExit += Program_Exited;
 
             Log.Debug("Setting up NotificationIcon");
             NotificationIcon.StartNotificationIcon();
