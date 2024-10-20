@@ -67,7 +67,9 @@ namespace MagpyServerWindows
 
             child.BeginOutputReadLine();
             child.OutputDataReceived += Child_OutputDataReceived;
-            child.ErrorDataReceived += Child_OutputDataReceived;
+
+            child.BeginErrorReadLine();
+            child.ErrorDataReceived += Child_OutputErrorReceived;
         }
 
         public static void KillNodeServer()
@@ -89,6 +91,11 @@ namespace MagpyServerWindows
         private static void Child_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             LoggingManager.LoggerNode.Debug(e.Data);
+        }
+
+        private static void Child_OutputErrorReceived(object sender, DataReceivedEventArgs e)
+        {
+            LoggingManager.LoggerNode.Error(e.Data);
         }
 
         private static void Child_Exited(object sender, EventArgs e)
