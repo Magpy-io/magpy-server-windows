@@ -15,6 +15,7 @@ namespace MagpyServerWindows
         static private ContextMenu contextMenu;
         static private MenuItem menuItem1;
         static private MenuItem menuItem2;
+        static private MenuItem menuItem3;
 
         public static void StartNotificationIcon()
         {
@@ -23,14 +24,19 @@ namespace MagpyServerWindows
             menuItem1.Text = AppName + " v" + version;
 
             menuItem2 = new MenuItem();
-            menuItem2.Index = 1;
+            menuItem2.Index = 2;
             menuItem2.Text = "Exit";
             menuItem2.Click += new EventHandler(Exit_Clicked);
+
+            menuItem3 = new MenuItem();
+            menuItem3.Index = 1;
+            menuItem3.Text = "Check for updates";
+            menuItem3.Click += new EventHandler(CheckForUpdates_Clicked);
 
 
             contextMenu = new ContextMenu();
             contextMenu.MenuItems.AddRange(
-                        new MenuItem[] { menuItem1, menuItem2 });
+                        new MenuItem[] { menuItem1, menuItem3, menuItem2 });
             
             notifyIcon = new NotifyIcon();
             notifyIcon.Icon = new System.Drawing.Icon(PathManager.RelativeExeToAbsolute(".\\appicon.ico"));
@@ -45,6 +51,11 @@ namespace MagpyServerWindows
             NodeEvents.SendEventSystrayExit();
             await Task.Delay(500);
             Application.Exit();
+        }
+
+        static private async void CheckForUpdates_Clicked(object Sender, EventArgs e)
+        {
+            await UpdateManager.UpdateMyApp();
         }
 
         private static void MenuItem_DoubleClick(object sender, EventArgs e)
