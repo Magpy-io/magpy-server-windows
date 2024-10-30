@@ -19,35 +19,54 @@ namespace MagpyServerWindows
         public static void Init()
         {
 #if DEBUG
-            LoggerWinApp = createConsoleLogger(WIN_APP_LOGGING_CHANNEL);
-            LoggerInstaller = createConsoleLogger(INSTALLER_LOGGING_CHANNEL);
-            LoggerNode = createConsoleLogger(NODE_LOGGING_CHANNEL);
+            LoggerWinApp = CreateConsoleLogger(WIN_APP_LOGGING_CHANNEL);
+            LoggerInstaller = CreateConsoleLogger(INSTALLER_LOGGING_CHANNEL);
+            LoggerNode = CreateNodeConsoleLogger(NODE_LOGGING_CHANNEL);
 #else
-            LoggerWinApp = createFileLoggerInFolder(WIN_APP_LOGGING_CHANNEL);
-            LoggerInstaller = createFileLoggerInFolder(INSTALLER_LOGGING_CHANNEL);
-            LoggerNode = createFileLoggerInFolder(NODE_LOGGING_CHANNEL);
+            LoggerWinApp = CreateFileLoggerInFolder(WIN_APP_LOGGING_CHANNEL);
+            LoggerInstaller = CreateFileLoggerInFolder(INSTALLER_LOGGING_CHANNEL);
+            LoggerNode = CreateNodeFileLoggerInFolder(NODE_LOGGING_CHANNEL);
 #endif
 
             Log.Logger = LoggerWinApp;
         }
 
-        private static ILogger createFileLoggerInFolder(string channel)
+        private static ILogger CreateFileLoggerInFolder(string channel)
         {
             return new LoggerConfiguration()
                .MinimumLevel.Verbose()
                .WriteTo.File(PathManager.RelativeAppDataToAbsolute(Path.Combine("LogFiles", channel, "Log.txt")),
                    rollingInterval: RollingInterval.Day,
-                   retainedFileTimeLimit: TimeSpan.FromDays(30),
-                   outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] {Message}{NewLine}{Exception}")
+                   retainedFileTimeLimit: TimeSpan.FromDays(5),
+                   outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff}] [{Level}] {Message}{NewLine}{Exception}")
                .CreateLogger();
         }
 
-        private static ILogger createConsoleLogger(string channel)
+        private static ILogger CreateConsoleLogger(string channel)
         {
             return new LoggerConfiguration()
                .MinimumLevel.Verbose()
                .WriteTo.Console(outputTemplate: $"[{channel}] " + "[{Level}] {Message}{NewLine}{Exception}")
                .CreateLogger();
+        }
+
+        private static ILogger CreateNodeFileLoggerInFolder(string channel)
+        {
+            return new LoggerConfiguration()
+               .MinimumLevel.Verbose()
+               .WriteTo.File(PathManager.RelativeAppDataToAbsolute(Path.Combine("LogFiles", channel, "Log.txt")),
+                   rollingInterval: RollingInterval.Day,
+                   retainedFileTimeLimit: TimeSpan.FromDays(7),
+                   outputTemplate: "{Message}{NewLine}")
+               .CreateLogger();
+        }
+
+        private static ILogger CreateNodeConsoleLogger(string channel)
+        {
+            return new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .WriteTo.Console(outputTemplate: "{Message}{NewLine}")
+                .CreateLogger();
         }
 
         public static Microsoft.Extensions.Logging.ILogger SerilogToMicrosoftLogger(ILogger logger)
