@@ -6,6 +6,7 @@ using System.ComponentModel;
 using static MagpyServerWindows.Constants;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Serilog;
 
 namespace MagpyServerWindows
 {
@@ -48,19 +49,40 @@ namespace MagpyServerWindows
 
         static private async void Exit_Clicked(object Sender, EventArgs e)
         {
-            NodeEvents.SendEventSystrayExit();
-            await Task.Delay(500);
-            Application.Exit();
+            try
+            {
+                NodeEvents.SendEventSystrayExit();
+                await Task.Delay(500);
+                Application.Exit();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex, "Error while trying to close server.");
+            }
         }
 
         static private async void CheckForUpdates_Clicked(object Sender, EventArgs e)
         {
-            await UpdateManager.UpdateMyApp();
+            try
+            {
+                await UpdateManager.UpdateMyApp();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex, "Error while trying to update server.");
+            }
         }
 
         private static void MenuItem_DoubleClick(object sender, EventArgs e)
         {
-            ServerManager.OpenWebInterface();
+            try
+            {
+                ServerManager.OpenWebInterface();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex, "Error while trying to open server web interface.");
+            }
         }
     }
 }
