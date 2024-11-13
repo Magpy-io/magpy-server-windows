@@ -7,6 +7,8 @@ namespace MagpyServerWindows
 {
     class UpdateManager
     {
+        static readonly string UPDATE_URL = "https://magpy-update-win.s3.eu-west-3.amazonaws.com";
+
         static bool isUpdateRunning = false;
 
         public static void Init()
@@ -40,7 +42,7 @@ namespace MagpyServerWindows
 
             try
             {
-                var mgr = new Velopack.UpdateManager("https://magpy-update-win.s3.eu-west-3.amazonaws.com");
+                var mgr = new Velopack.UpdateManager(UPDATE_URL);
 
                 Log.Debug("Checking for updates.");
 
