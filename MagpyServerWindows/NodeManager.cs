@@ -29,17 +29,17 @@ namespace MagpyServerWindows
             Directory.CreateDirectory(RelativeExeToAbsolute("..\\redis"));
 
             bool nodeExistsInRedis = File.Exists(RelativeExeToAbsolute("..\\redis\\node.exe"));
-            bool nodeExistsInAppFolder = File.Exists(RelativeExeToAbsolute(".\\node.exe"));
+            bool nodeExistsInAppFolder = File.Exists(RelativeExeToAbsolute(".\\redis\\node.exe"));
 
             if (!nodeExistsInRedis && nodeExistsInAppFolder)
             {
-                File.Copy(RelativeExeToAbsolute(".\\node.exe"), RelativeExeToAbsolute("..\\redis\\node.exe"));
+                File.Copy(RelativeExeToAbsolute(".\\redis\\node.exe"), RelativeExeToAbsolute("..\\redis\\node.exe"));
                 nodeExistsInRedis = true;
             }
 
             if (nodeExistsInAppFolder)
             {
-                File.Delete(RelativeExeToAbsolute(".\\node.exe"));
+                File.Delete(RelativeExeToAbsolute(".\\redis\\node.exe"));
             }
 
             return nodeExistsInRedis;
