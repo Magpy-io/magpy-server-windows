@@ -20,7 +20,10 @@ namespace MagpyServerWindows
         public static string JsEntryFilePath
         {
             get{
-                return RelativeExeToAbsolute(".\\bundle\\js\\bundle.js");
+                string pathWithPotentialSpaces = RelativeExeToAbsolute(".\\bundle\\js\\bundle.js");
+
+                // Escaping spaces if in path
+                return $"\"{pathWithPotentialSpaces}\"";
             }
         }
 
@@ -51,8 +54,8 @@ namespace MagpyServerWindows
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = NodeManager.NodePath,
-                    Arguments = NodeManager.JsEntryFilePath,
+                    FileName = NodePath,
+                    Arguments = JsEntryFilePath,
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
