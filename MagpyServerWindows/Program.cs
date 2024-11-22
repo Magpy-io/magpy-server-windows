@@ -51,7 +51,7 @@ namespace MagpyServerWindows
             Application.Run();
         }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             try
             {
@@ -68,7 +68,16 @@ namespace MagpyServerWindows
             }
             catch (Exception e)
             {
-                Log.Error(e, "Error launching app");
+                Log.Error(e, "Error launching app, checking for updates...");
+
+                try
+                {
+                    await UpdateManager.UpdateMyApp();
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug(ex, "Error while trying to update server.");
+                }
 #if DEBUG
                 Console.ReadKey();
 #endif
