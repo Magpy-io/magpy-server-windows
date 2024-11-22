@@ -1,7 +1,10 @@
 ﻿using Serilog;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Velopack;
+
+using static MagpyServerWindows.Utils;
 
 namespace MagpyServerWindows
 {
@@ -75,20 +78,21 @@ namespace MagpyServerWindows
             }
         }
 
-        public static async Task SetupDelayedUpdate(int minutes = 3)
+        public static void SetupPeriodicUpdate()
         {
-            int millisecondsDelay = minutes * 1000 * 60;
+            // 12 hours
+            int secondsDelay = 12 * 60 * 60;
 
-            await Task.Delay(millisecondsDelay);
-
-            try
-            {
-                await UpdateMyApp();
-            }
-            catch (Exception ex)
-            {
-                Log.Debug(ex, "Error while trying to update server.");
-            }
+            SchedulePeriodicTask(async () => {
+                try
+                {
+                    await UpdateMyApp();
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug(ex, "Error while trying to update server.");
+                }
+            }, secondsDelay);
         }
     }
 }

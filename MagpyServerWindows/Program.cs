@@ -24,7 +24,7 @@ namespace MagpyServerWindows
 
             Log.Debug("Updating setup finished.");
 
-            Task delayedUpdate = UpdateManager.SetupDelayedUpdate();
+            UpdateManager.SetupPeriodicUpdate();
 
             Log.Debug("Looking for node executable.");
 
