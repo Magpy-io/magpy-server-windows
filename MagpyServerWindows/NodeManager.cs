@@ -1,4 +1,4 @@
-﻿using Serilog;
+using Serilog;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -26,6 +26,8 @@ namespace MagpyServerWindows
             }
         }
 
+        // For more info about the utility of this code
+        // https://www.notion.so/Node-executable-14a1dc000d6d802b90daf98038c334a3
         public static bool VerifyNodeExe()
         {
             Directory.CreateDirectory(RelativeExeToAbsolute("..\\redis"));
