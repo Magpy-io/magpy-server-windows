@@ -45,6 +45,7 @@ namespace MagpyServerWindows
 
         static private async void Exit_Clicked(object Sender, EventArgs e)
         {
+            Log.Debug("Notification Icon: Exit clicked");
             try
             {
                 NodeEvents.SendEventSystrayExit();
@@ -59,6 +60,7 @@ namespace MagpyServerWindows
 
         static private async void CheckForUpdates_Clicked(object Sender, EventArgs e)
         {
+            Log.Debug("Notification Icon: Check for updates clicked");
             try
             {
                 await UpdateManager.UpdateMyApp();
@@ -71,6 +73,7 @@ namespace MagpyServerWindows
 
         private static void MenuItem_DoubleClick(object sender, EventArgs e)
         {
+            Log.Debug("Notification Icon: Double clicked");
             try
             {
                 ServerManager.OpenWebInterface();
