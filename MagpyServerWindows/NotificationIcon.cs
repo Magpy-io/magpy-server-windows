@@ -23,12 +23,12 @@ namespace MagpyServerWindows
             menuItem2 = new MenuItem();
             menuItem2.Index = 2;
             menuItem2.Text = "Exit";
-            menuItem2.Click += new EventHandler(Exit_Clicked);
+            menuItem2.Click += Exit_Clicked;
 
             menuItem3 = new MenuItem();
             menuItem3.Index = 1;
             menuItem3.Text = "Check for updates";
-            menuItem3.Click += new EventHandler(CheckForUpdates_Clicked);
+            menuItem3.Click += CheckForUpdates_Clicked;
 
 
             contextMenu = new ContextMenu();
@@ -40,7 +40,7 @@ namespace MagpyServerWindows
             notifyIcon.ContextMenu = contextMenu;
             notifyIcon.Text = AppName;
             notifyIcon.Visible = true;
-            notifyIcon.DoubleClick += new EventHandler(MenuItem_DoubleClick);
+            notifyIcon.DoubleClick += MenuItem_DoubleClick;
         }
 
         static private async void Exit_Clicked(object Sender, EventArgs e)

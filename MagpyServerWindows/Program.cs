@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Velopack;
 using Serilog;
 
 namespace MagpyServerWindows
@@ -42,8 +36,7 @@ namespace MagpyServerWindows
 
             Log.Debug("Node server started.");
 
-            Process.GetCurrentProcess().Exited += Program_Exited;
-            Application.ApplicationExit += Program_Exited;
+            AppDomain.CurrentDomain.ProcessExit += Program_Exited;
 
             Log.Debug("Setting up NotificationIcon");
             NotificationIcon.StartNotificationIcon();
@@ -63,7 +56,7 @@ namespace MagpyServerWindows
                 else
                 {
                     ServerManager.OpenWebInterface();
-                    Application.Exit();
+                    Environment.Exit(0);
                 }
             }
             catch (Exception e)
