@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
+using System.Reflection;
 
 namespace MagpyServerWindows
 {
@@ -9,7 +9,7 @@ namespace MagpyServerWindows
         public const string APPDATA_MAGPY_FOLDER_NAME = "Magpy";
         public static string RelativeExeToAbsolute(string relativePath)
         {
-            return Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), relativePath);
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), relativePath);
         }
 
         public static string RelativeAppDataToAbsolute(string relativePath)

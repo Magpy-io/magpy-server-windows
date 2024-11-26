@@ -1,10 +1,5 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Reflection;
 
 namespace MagpyServerWindows
 {
@@ -15,7 +10,7 @@ namespace MagpyServerWindows
         public static void EnableAutoStartup()
         {
             RegistryKey keyRun = Registry.CurrentUser.OpenSubKey(START_UP_REGKEY_PATH, true);
-            keyRun.SetValue(START_UP_REGKEY_NAME, Application.ExecutablePath);
+            keyRun.SetValue(START_UP_REGKEY_NAME, Assembly.GetExecutingAssembly().Location);
         }
 
         public static void DisableAutoStartup()

@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
 using static MagpyServerWindows.PathManager;
 
 namespace MagpyServerWindows
@@ -104,7 +103,7 @@ namespace MagpyServerWindows
         private static void Child_Exited(object sender, EventArgs e)
         {
             Log.Debug("Server node exited. Closing app.");
-            Application.Exit();
+            Environment.Exit(0);
         }
     }
 }
