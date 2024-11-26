@@ -7,13 +7,9 @@ using Serilog;
 namespace MagpyServerWindows
 {
     public class Program
-   {
+    {
         static void MainInner(string[] args)
         {
-            LoggingManager.Init();
-
-            Log.Debug("Logging initialized.");
-
             UpdateManager.Init();
 
             Log.Debug("Updating setup finished.");
@@ -46,11 +42,15 @@ namespace MagpyServerWindows
 
         static async Task Main(string[] args)
         {
+            LoggingManager.InitEarly();
             try
             {
                 bool instanceCreated = InstanceManager.HoldInstance();
                 if (instanceCreated)
                 {
+                    LoggingManager.Init();
+                    Log.Debug("Logging initialized.");
+
                     MainInner(args);
                 }
                 else

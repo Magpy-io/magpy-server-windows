@@ -16,6 +16,15 @@ namespace MagpyServerWindows
         public static ILogger LoggerInstaller { get; private set; }
         public static ILogger LoggerNode { get; private set; }
 
+        public static void InitEarly()
+        {
+            LoggerWinApp = CreateConsoleLogger(WIN_APP_LOGGING_CHANNEL);
+            LoggerInstaller = CreateConsoleLogger(INSTALLER_LOGGING_CHANNEL);
+            LoggerNode = CreateNodeConsoleLogger(NODE_LOGGING_CHANNEL);
+
+            Log.Logger = LoggerLinuxApp;
+        }
+
         public static void Init()
         {
 #if DEBUG
