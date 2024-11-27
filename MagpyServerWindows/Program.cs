@@ -32,8 +32,6 @@ namespace MagpyServerWindows
 
             Log.Debug("Node server started.");
 
-            AppDomain.CurrentDomain.ProcessExit += Program_Exited;
-
             Log.Debug("Setting up NotificationIcon");
             NotificationIcon.StartNotificationIcon();
 
@@ -43,6 +41,8 @@ namespace MagpyServerWindows
         static async Task Main(string[] args)
         {
             LoggingManager.InitEarly();
+            AppDomain.CurrentDomain.ProcessExit += Program_Exited;
+
             try
             {
                 bool instanceCreated = InstanceManager.HoldInstance();
@@ -85,6 +85,7 @@ namespace MagpyServerWindows
         {
             Log.Debug("Program closing, Killing node server.");
             NodeManager.KillNodeServer();
+            InstanceManager.ReleaseInstance();
         }
     }
 }
