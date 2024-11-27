@@ -40,7 +40,9 @@ namespace MagpyServerWindows
 
         static async Task Main(string[] args)
         {
+#if DEBUG
             LoggingManager.InitEarly();
+#endif
             AppDomain.CurrentDomain.ProcessExit += Program_Exited;
 
             try
